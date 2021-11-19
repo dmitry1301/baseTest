@@ -13,7 +13,6 @@ namespace baseTest.Models
         public string NameProject { get; set; }
         public DateTime CloseDate { get; set; }
         public string TicketStatus { get; set; }
-
         public int UserId { get; set; }  //ссылка на модель User
         public User User { get; set; }
     }
