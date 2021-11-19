@@ -2,3 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+let app = new Vue({
+    el: '#app',
+    data: {
+        message: `Vue in the works!`
+    }
+})
