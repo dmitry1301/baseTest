@@ -15,6 +15,7 @@ namespace baseTest
     {
         public static void Main(string[] args)
         {
+            //внедрение зависимости
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {

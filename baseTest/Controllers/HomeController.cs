@@ -1,6 +1,8 @@
 ﻿using baseTest.Data;
 using baseTest.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,15 +20,21 @@ namespace baseTest.Controllers
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-            db = context;
+            db = context; // внедряем зависимость контекста БД
         }
 
         public IActionResult Index()
         {
-            return View(db.tickets.ToList());
+            var tickets = db.tickets.Include(p => p.User);
+            return View(tickets);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Create()
         {
             return View();
         }
@@ -35,6 +43,28 @@ namespace baseTest.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet("getTickets")]
+        public JsonResult GetTicketsResult()
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            var tks = db.tickets;
+
+            foreach (var ticket in tks)
+            {
+                tickets.Add(new Ticket
+                {
+                    Id = ticket.Id,
+                    CreateDate = ticket.CreateDate,
+                    Description = ticket.Description,
+                    NameProject = ticket.NameProject,
+                    CloseDate = ticket.CloseDate,
+                    TicketStatus = ticket.TicketStatus,
+                    UserId = ticket.UserId
+                });
+            }
+            return Json(tickets);
         }
     }
 }

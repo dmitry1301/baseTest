@@ -1,9 +1,69 @@
-﻿@model IEnumerable<baseTest.Models.Ticket>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="text-center">
+
+<div class="container">
     <div id="app">
-        <h1 class="display-4">{{message}}</h1>
+        <a asp-action="Create"> Добавить тикет</a>
+        <table class="table">
+            <tr>
+                <td>Дата создания</td>
+                <td>Описание</td>
+                <td>Инициатор</td>
+                <td>Наименование проекта</td>
+                <td>Статус</td>
+                <td>Дата закрытия</td>
+                <td>Кем закрыт</td>
+            </tr>
+            @*@foreach (var ticket in Model)
+            {
+                <tr>
+                    <td>
+                        @ticket.CreateDate.ToString("dd.MM.yyyyy")
+                    </td>
+                    <td>
+                        @ticket.Description
+                    </td>
+                    <td>
+                        @ticket.User.Name
+                    </td>
+                    <td>
+                        @ticket.NameProject
+                    </td>
+                    <td>
+                        @ticket.TicketStatus
+                    </td>
+                    <td>
+                        @ticket.CloseDate.ToString("dd.MM.yyyyy")
+                    </td>
+                    <td>
+                        @ticket.User.Name
+                    </td>
+                </tr>
+            }*@
+        <tr v-for="ticket in tickets" class="ticket">
+            <td>
+                {{ticket.createDate}}
+            </td>
+            <td>
+                {{ticket.description}}
+            </td>
+            <td>
+                {{ticket.userId}}
+            </td>
+            <td>
+                {{ticket.nameProject}}
+            </td>
+            <td>
+                {{ticket.ticketStatus}}
+            </td>
+            <td>
+                {{ticket.closeDate}}
+            </td>
+            <td>
+                {{ticket.userId}}
+            </td>
+        </tr>
+        </table>
     </div>
 </div>

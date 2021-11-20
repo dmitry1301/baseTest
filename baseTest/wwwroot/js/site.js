@@ -5,7 +5,14 @@
 
 let app = new Vue({
     el: '#app',
-    data: {
-        message: `Vue in the works!`
+    data() {
+        return {
+            tickets: null
+        };
+    },
+    mounted() {
+        axios
+            .get('https://localhost:44360/getTickets')
+            .then(response => (this.tickets = response.data));
     }
 })
